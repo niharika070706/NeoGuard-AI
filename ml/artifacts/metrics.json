@@ -1,0 +1,7 @@
+{
+  "roc_auc_demo":0.7336054422,
+  "average_precision_demo":0.5489778007,
+  "brier_demo":0.1790225532,
+  "n_samples":3500,
+  "note":"Synthetic demonstration data only; these metrics are not clinical validation."
+}

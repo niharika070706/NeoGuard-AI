@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Dashboard — NeoGuard{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">CLINICAL WORKSPACE</div><h1>Good day, {{ current_user.name.split()[0] }}</h1><p>Review patients and launch a structured assessment.</p></div><a class="primary" href="{{ url_for('main.new_patient') }}">+ New patient</a></div>
+<div class="stat-grid"><div class="stat"><span>Patients</span><strong>{{ patients|length }}</strong></div><div class="stat"><span>Recent assessments</span><strong>{{ assessments|length }}</strong></div><div class="stat"><span>Workflow</span><strong>5 steps</strong></div></div>
+<div class="panel"><div class="panel-title"><div><h2>Patients</h2><p>Patient codes are used as the operational identifier.</p></div></div>
+<table><thead><tr><th>Patient</th><th>GA</th><th>Birth weight</th><th>Created</th><th></th></tr></thead><tbody>
+{% for p in patients %}<tr><td><a href="{{ url_for('main.patient', patient_id=p.id) }}"><b>{{ p.patient_code }}</b></a><small>{{ p.name }}</small></td><td>{{ p.gestational_age }} wk</td><td>{{ p.birth_weight }} kg</td><td>{{ p.created_at.strftime('%d %b %Y') }}</td><td><a class="table-btn" href="{{ url_for('main.assessment', patient_id=p.id) }}">Assess →</a></td></tr>{% else %}<tr><td colspan="5" class="empty">No patients yet. Create your first demo patient.</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="panel"><div class="panel-title"><div><h2>Recent assessments</h2></div></div><table><thead><tr><th>Patient</th><th>Risk</th><th>Category</th><th>Data quality</th></tr></thead><tbody>
+{% for a in assessments %}<tr><td>{{ a.patient.patient_code }}</td><td><b>{{ a.risk_probability }}%</b></td><td><span class="pill {{ a.risk_category|lower }}">{{ a.risk_category }}</span></td><td>{{ a.data_quality }}</td></tr>{% else %}<tr><td colspan="4" class="empty">No assessments yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

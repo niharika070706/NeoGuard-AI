@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}{{ patient.patient_code }} — NeoGuard{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">PATIENT PROFILE</div><h1>{{ patient.patient_code }}</h1><p>{{ patient.name }} · {{ patient.gestational_age }} weeks · {{ patient.birth_weight }} kg</p></div><a class="primary" href="{{ url_for('main.assessment', patient_id=patient.id) }}">Run assessment →</a></div>
+<div class="panel profile"><div><span>Sex</span><b>{{ patient.sex }}</b></div><div><span>Delivery</span><b>{{ patient.delivery_mode }}</b></div><div><span>APGAR</span><b>{{ patient.apgar_1 }} / {{ patient.apgar_5 }}</b></div></div>
+<div class="panel"><h2>Assessment history</h2>{% for a in patient.assessments|sort(attribute='created_at', reverse=true) %}<div class="history"><div><b>{{ a.created_at.strftime('%d %b %Y %H:%M') }}</b><small>Data quality: {{ a.data_quality }}</small></div><strong>{{ a.risk_probability }}%</strong><span class="pill {{ a.risk_category|lower }}">{{ a.risk_category }}</span></div>{% else %}<p class="empty">No assessments yet.</p>{% endfor %}</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% block title %}NeoGuard AI — Early risk recognition{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">NEONATAL CLINICAL DECISION SUPPORT</div>
+    <h1>Early signals.<br><span>Clearer decisions.</span></h1>
+    <p>NeoGuard organizes neonatal clinical information into an explainable sepsis-risk assessment designed to support healthcare professionals.</p>
+    <div class="actions"><a class="primary" href="{{ url_for('auth.register') }}">Start with NeoGuard <span>→</span></a><a class="secondary" href="{{ url_for('auth.login') }}">Sign in</a></div>
+    <div class="trust"><span>✓ Secure sessions</span><span>✓ Explainable output</span><span>✓ Audit-ready workflow</span></div>
+  </div>
+  <div class="hero-card">
+    <div class="mini-label">SAMPLE ASSESSMENT</div>
+    <div class="score-row"><div><div class="muted">Risk probability</div><div class="bigscore">68<span>%</span></div></div><div class="pill elevated">Elevated</div></div>
+    <div class="meter"><i style="width:68%"></i></div>
+    <div class="mini-label">TOP CONTRIBUTORS</div>
+    <div class="contrib"><span>Respiratory rate</span><b>High</b></div>
+    <div class="contrib"><span>CRP</span><b>Moderate</b></div>
+    <div class="contrib"><span>SpO₂</span><b>Moderate</b></div>
+    <div class="demo-note">Illustrative interface — not a real patient result.</div>
+  </div>
+</section>
+<section class="feature-grid">
+  <div><b>01</b><h3>Structured intake</h3><p>Patient profile, maternal risks, vitals, laboratory results and blood gas in one guided flow.</p></div>
+  <div><b>02</b><h3>Explainable model</h3><p>Shows the factors that influenced the risk estimate instead of presenting a black-box number.</p></div>
+  <div><b>03</b><h3>Longitudinal view</h3><p>Keep assessments together so clinicians can review how risk changes over time.</p></div>
+</section>
+<div class="disclaimer"><strong>Important:</strong> This prototype is for research/education. It has not been clinically validated and must not be used to diagnose or treat a patient.</div>
+{% endblock %}

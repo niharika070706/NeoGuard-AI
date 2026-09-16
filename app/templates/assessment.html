@@ -1,0 +1,40 @@
+{% extends "base.html" %}{% block title %}Assessment — NeoGuard{% endblock %}
+{% block content %}
+<div class="page-head"><div><div class="eyebrow">CLINICAL ASSESSMENT</div><h1>{{ patient.patient_code }}</h1><p>Guided risk-screening workflow. Complete only information that is clinically available.</p></div><span class="step-badge">5-step workflow</span></div>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="assessment-grid">
+<section class="panel"><div class="section-title"><span>02</span><div><h2>Maternal & neonatal risk</h2><p>Binary risk indicators</p></div></div>
+<div class="toggle-grid">{% for key,label in [('maternal_fever','Maternal fever'),('prom_gt_18h','PROM >18h'),('chorioamnionitis','Chorioamnionitis'),('gbs_positive','GBS positive'),('iugr_sga','IUGR / SGA')] %}<label class="toggle"><input type="checkbox" name="{{ key }}" value="1"><span>{{ label }}</span></label>{% endfor %}</div></section>
+<section class="panel"><div class="section-title"><span>03</span><div><h2>Vital signs</h2><p>Use the latest clinically relevant measurement</p></div></div>
+<div class="form-grid compact">
+<label>Temperature °C<input name="temperature" type="number" step=".01" placeholder="36.7"></label>
+<label>Heart rate /min<input name="heart_rate" type="number" step="1" placeholder="145"></label>
+<label>SpO₂ %<input name="spo2" type="number" step=".1" placeholder="96"></label>
+<label>Respiratory rate /min<input name="respiratory_rate" type="number" placeholder="48"></label>
+<label>Capillary refill sec<input name="capillary_refill" type="number" step=".1" placeholder="2"></label>
+</div></section>
+<section class="panel"><div class="section-title"><span>04</span><div><h2>Laboratory panel</h2><p>Leave unavailable values blank.</p></div></div>
+<div class="form-grid compact">
+<label>CRP mg/L<input name="crp" type="number" step=".1" placeholder="2.0"></label>
+<label>Procalcitonin ng/mL<input name="pct" type="number" step=".01" placeholder="0.8"></label>
+<label>Lactate mmol/L<input name="lactate" type="number" step=".01" placeholder="2.0"></label>
+<label>WBC ×10⁹/L<input name="wbc" type="number" step=".1" placeholder="12"></label>
+<label>Platelets ×10⁹/L<input name="platelets" type="number" step="1" placeholder="220"></label>
+<label>I:T ratio<input name="it_ratio" type="number" step=".01" placeholder=".10"></label>
+</div></section>
+<section class="panel"><div class="section-title"><span>05</span><div><h2>Blood gas</h2><p>Optional in this prototype; missing data lowers data-quality status.</p></div></div>
+<div class="form-grid compact">
+<label>pH<input name="ph" type="number" step=".01" placeholder="7.35"></label>
+<label>Base excess<input name="base_excess" type="number" step=".1" placeholder="0"></label>
+</div></section>
+</div>
+<button class="primary assessment-submit">Calculate risk estimate →</button>
+</form>
+{% if result %}
+<section class="result panel">
+<div class="result-top"><div><div class="eyebrow">MODEL OUTPUT · {{ result.model_version }}</div><h2>Estimated sepsis risk</h2><div class="score">{{ result.probability }}<span>%</span></div><span class="pill {{ result.category|lower }}">{{ result.category }} risk</span></div><div class="quality"><span>Data quality</span><b>{{ result.quality }}</b>{% if result.missing %}<small>{{ result.missing|length }} input(s) missing</small>{% endif %}</div></div>
+<div class="meter large"><i style="width:{{ result.probability }}%"></i></div>
+<div class="result-cols"><div><h3>Factors influencing this estimate</h3>{% for c in result.contributions %}<div class="contrib"><span>{{ c.feature }}</span><b>{{ c.direction }} risk · {{ c.strength }}</b></div>{% else %}<p>No interpretable contributions available.</p>{% endfor %}</div><div class="clinical-note"><h3>Clinical safety note</h3><p>This is an algorithmic risk estimate, not a diagnosis. Review the newborn's complete clinical picture and follow your institution's neonatal sepsis protocol.</p><p>Do not start, stop, or change treatment solely from this screen.</p></div></div>
+</section>
+{% endif %}
+{% endblock %}

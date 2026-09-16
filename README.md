@@ -1,87 +1,133 @@
-# NeoGuard AI — Complete End-to-End Prototype
+# NeoGuard AI
 
-NeoGuard is a secure, explainable neonatal sepsis **risk-screening / clinical decision-support research prototype**.
+## AI-Assisted Neonatal Sepsis Risk Estimation System
 
-It includes:
+NeoGuard AI is an end-to-end healthcare research and educational prototype designed to estimate neonatal sepsis risk from clinical parameters using machine learning.
 
-- Modern responsive hospital-style UI
-- Landing page
-- Secure login/register
-- Password hashing with scrypt
-- CSRF protection
-- Session hardening
-- Role field ready for RBAC
-- Patient management
-- Five-step clinical assessment flow
-- Risk probability model
-- Calibrated Random Forest demonstration model
-- Missing-data / data-quality status
-- Local model contribution explanation
+The system combines a secure web application, patient management, clinical assessment workflow, machine learning prediction, and explainable AI into a unified platform.
+
+> **Disclaimer:** NeoGuard AI is a research and educational prototype. It is not a medical diagnostic device and must not be used to make clinical decisions.
+
+---
+
+## Project Overview
+
+Neonatal sepsis is a serious condition where early recognition can be important. NeoGuard explores how machine learning can be used to provide an AI-assisted risk estimate from selected neonatal clinical parameters.
+
+The application is designed around a simple workflow:
+
+Patient Details  
+↓  
+Clinical Assessment  
+↓  
+Data Processing  
+↓  
+Machine Learning Model  
+↓  
+Sepsis Risk Estimate  
+↓  
+Explainable AI  
+↓  
+Assessment History
+
+---
+
+## Key Features
+
+- Secure user authentication
+- Patient registration and management
+- Neonatal clinical assessment workflow
+- Vital-sign and laboratory input
+- AI-assisted sepsis risk estimation
+- Explainable prediction factors
 - Assessment history
 - Audit logging
-- SQLite database for local development
-- Production-oriented project structure
+- Responsive healthcare-focused UI
+- SQLite database for development
+- Flask backend
+- Machine learning pipeline
 
-## Important clinical limitation
+---
 
-This repository is a **research/education prototype**. The included model is trained on synthetic demonstration data so the application can run immediately. Its displayed probability is NOT clinically validated and must not be used to diagnose or treat a patient.
+## Technology Stack
 
-For real research, replace the demonstration training set with an appropriately governed neonatal dataset and perform patient-level/time-aware validation, calibration, subgroup analysis, external validation and prospective clinical validation.
+### Backend
+- Python
+- Flask
+- Flask-SQLAlchemy
+- Flask-Login
+- Flask-WTF
 
-## Evidence base used for project design
+### Machine Learning
+- Scikit-learn
+- NumPy
+- Pandas
+- SHAP
+- Joblib
 
-The workflow is informed by:
+### Database
+- SQLite
+- SQLAlchemy
 
-1. WHO recommendations for serious bacterial infections in infants aged 0–59 days.
-2. Published neonatal sepsis machine-learning work using EHR data from NICU episodes.
-3. Neonatal sepsis metadata standards for structured research data collection.
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
 
-The project deliberately does not automatically prescribe antibiotics.
+---
 
-## Run on Windows
+## Machine Learning
 
-Open PowerShell in this folder:
+The current version contains a synthetic demonstration model intended for software development and demonstration purposes.
 
-```powershell
-py -3.13 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python -m ml.train_demo
-python run.py
-```
+Current prototype metrics:
 
-Open:
+| Metric | Value |
+|---|---:|
+| ROC-AUC | 0.734 |
+| Average Precision | 0.549 |
+| Brier Score | 0.179 |
+| Samples | 3,500 |
 
-http://127.0.0.1:5000
+These metrics were obtained using synthetic demonstration data.
 
-Demo login:
+They do **not** represent clinical validation or real-world diagnostic accuracy.
 
-- Email: `demo@neoguard.local`
-- Password: `NeoGuard@2026`
+The model will be upgraded in future work using appropriate neonatal clinical datasets and rigorous validation procedures.
 
-## Production checklist
+---
 
-Before any real patient use:
+## Explainable AI
 
-- Use HTTPS
-- Use PostgreSQL instead of SQLite
-- Put secrets in a secret manager
-- Add MFA / hospital SSO
-- Implement strict role-based and organization-level access control
-- Encrypt data at rest and in transit
-- Minimize patient identifiers
-- Add consent and retention controls
-- Add complete audit logging
-- Validate the model on independent clinical data
-- Calibrate the model
-- Evaluate sensitivity, specificity, PPV, NPV, AUROC, AUPRC and Brier score
-- Perform subgroup/fairness analysis
-- Perform prospective validation
-- Complete institutional ethics / governance review
-- Conduct applicable medical-device / SaMD regulatory assessment
-- Have a neonatologist and clinical governance team approve clinical content
+NeoGuard is designed to provide interpretable information alongside the model's risk estimate.
 
-## Data
+Potential contributing clinical factors can be presented to help users understand which inputs influenced the model's prediction.
 
-`data/README.md` explains the recommended public evidence/data sources and how to replace the synthetic demonstration data.
+SHAP is included in the machine learning architecture for explainability research.
+
+---
+
+## Security
+
+The prototype includes:
+
+- Password hashing
+- Authentication
+- Session management
+- CSRF protection
+- Secure session configuration
+- Audit logging
+- Separation of sensitive configuration
+- Protection against accidental upload of local databases and environment files
+
+For real clinical deployment, additional security, privacy, regulatory, infrastructure, and clinical governance requirements would be necessary.
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/niharika070706/NeoGuard-AI.git
+cd NeoGuard-AI
